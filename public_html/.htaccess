@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+#ensure https
+#RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#RewriteCond %{HTTPS} off
+#RewriteRule ^ https://bili.vn%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^www.(.+) [NC]
+RewriteRule ^(.*) https://%1/$1 [R=301,NE,L]
+
+RewriteRule ^resize/([0-9]+)x([0-9]+)/a-(.*)/zc-([0-9]+)/f(.*) resize/?src=$5&w=$1&h=$2&a=$3&zc=$4
+
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)([^/])$ https://%{HTTP_HOST}/$1$2/ [L,R=301]
+RewriteRule . /index.php [L]
+
+</IfModule>
