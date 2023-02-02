@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-12">
         <form action="" method="GET" id="filters">
@@ -18,7 +17,7 @@
 <script type="text/javascript">
 
     var time_zone = 'America/New_York';
-//    moment.tz.setDefault(time_zone);  
+    //    moment.tz.setDefault(time_zone);
     $(".daterangepicker-field").daterangepicker({
         maxDate: [moment(), 'expanded'],
         minDate: ['2018-11-01', 'expanded'],
@@ -34,7 +33,13 @@
             'All Time': 'all-time', // [minDate, maxDate]
         },
     }, function (startDate, endDate, period) {
-        $(this).text(startDate.format('L') + ' – ' + endDate.format('L'));
+        console.log( startDate.format('L') );
+        console.log( endDate.format('L') );
+        if (startDate.format('L') == endDate.format('L')) {
+            $(this).text(startDate.format('L'));
+        } else {
+            $(this).text(startDate.format('L') + ' – ' + endDate.format('L'));
+        }
         $('#input_start_month').val(startDate.format('MM/Y'));
         $('#input_end_month').val(endDate.format('MM/Y'));
         $('#filters').submit();

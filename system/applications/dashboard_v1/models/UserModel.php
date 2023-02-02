@@ -191,9 +191,9 @@ class UserModel extends Model {
             'email' => $inputs['email'],
             'password' => password_salt($inputs['password']),
             'permission' => [
-                '$in' => ['affiliate', 'admin']
+                '$in' => [2, 8]
             ],
-            'status' => 'active'
+            'status' => 1
         ];
         $field = ['id', 'email', 'login_token'];
         $user = $this->findOne($query, $field);
@@ -257,7 +257,7 @@ class UserModel extends Model {
         if (!$token) {
             return false;
         }
-        $query = ['login_token' => $token, 'status' => 'active'];
+        $query = ['login_token' => $token, 'status' => 1];
         $user = $this->db->setTable(TABLE_USER)->setQuery($query)->setField($field)->setLimit(1)->findOne();
         return $user;
     }
@@ -290,11 +290,13 @@ class UserModel extends Model {
         return true;
     }
 
-    public function getAllUser($field = [], $order = ['id' => 'DESC']) {
+    public function getPublishersByAffiliate($affID, $field = [], $order = ['id' => 'DESC']) {
         $query = [
-            'deleted_at' => 0,
-            'status' => 'active',
-            'permission' => 'publisher'
+            'aff_id' => $affID,
+            'status' => 1,
+            'permission' => ['$in' => [1,6,7]],
+            'deleted_at' => null,
+
         ];
         $Users = $this->find($query, $field, $order);
         return $Users;
@@ -404,7 +406,7 @@ class UserModel extends Model {
     }
 
     public function getAllPresenters($field = [], $order = ['id' => 'DESC']) {
-        $Users = $this->find(['permission' => 'affiliate'], $field, $order);
+        $Users = $this->find(['permission' => 8], $field, $order);
         return $Users;
     }
 
@@ -443,8 +445,8 @@ class UserModel extends Model {
                     $insert = [
                         'password' => $password,
                         'email' => $email,
-                        'permission' => 'affiliate',
-                        'status' => 'active',
+                        'permission' => 8,
+                        'status' => 1,
                         'first_name' => $first_name,
                         'last_name' => $last_name,
                         'net' => 45,

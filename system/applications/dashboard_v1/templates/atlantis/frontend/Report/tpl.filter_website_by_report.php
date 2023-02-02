@@ -1,3 +1,4 @@
+
 <td colspan="100%">
     <div class="card border-transparent filter-box">
         <div class="card-header">
@@ -26,7 +27,7 @@
                                         <td>
                                             <div><?= $domain->name ?></div>
                                         </td>
-                                        <td>$<?= number_format($domain->revenue, 2) ?></td>
+                                        <td>$<?= $domain->revenue ?></td>
                                         <td>&nbsp;</td>
                                     </tr>
                                 <?php endforeach; ?>

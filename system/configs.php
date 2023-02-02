@@ -112,39 +112,36 @@ if ($is_local) {
     define('DB_USER', 'apacadmin');
     define('DB_PASSWORD', 'iK29&6%!9XKjs@');
     define('DB_NAME', 'apac_ss');
-    define('DB_HOST', '192.168.9.10');
+    // define('DB_HOST', '192.168.9.10');
+    define('DB_HOST', 'p:localhost');
     define('DB_PORT', 9682);
     //define('DB_ENCODING', 'utf8_general_ci');
     define('DB_ENCODING', 'utf8mb4');
 }
 
 // Config Table Database MySQL
-define('TABLE_USER', 'hdb_users');
-define('TABLE_AFF_LEVEL', 'hbd_aff_level');
-define('TABLE_BILLING_USER', 'hbd_billing_user');
-define('TABLE_REPORT_TAG', 'hbd_reports_tag');
-define('TABLE_REPORT_TAG_FOR_PUBLISHER', 'hbd_reports_tag_user');
-define('TABLE_REPORT_BIDDER', 'hbd_reports_bidder');
-define('TABLE_REPORT_BIDDER_FOR_PUBLISHER', 'hbd_reports_bidder_user');
-define('TABLE_REPORT_AFFILIATE', 'hbd_reports_affiliate');
-define('TABLE_PAYMENT', 'hbd_payments');
-define('TABLE_DOMAIN', 'hdb_domains');
-define('TABLE_PAYMENT_NEW', 'hbd_payments_new');
-define('TABLE_PAYMENT_REQUEST', 'hbd_payments_request');
+define('TABLE_USER', 'user');
+// define('TABLE_AFF_LEVEL', 'hbd_aff_level');
+define('TABLE_BILLING_USER', 'user_billing');
+define('TABLE_REPORT_PUB', 'report_pub');
+// define('TABLE_REPORT_TAG_FOR_PUBLISHER', 'hbd_reports_tag_user');
+define('TABLE_PAYMENT', 'payment_invoice');
+define('TABLE_DOMAIN', 'inventory');
+define('TABLE_PAYMENT_REQUEST', 'payment_request');
 define('TABLE_ACTIVITY', 'hbd_activity');
 
 // Config URL
-define('DOMAIN_MASTER', 'valueimpression.com');
-define('DOMAIN_AD', 'services.bilsyndication.com');
-define('DOMAIN_CONSOLE', 'console.valueimpression.com');
-define('URL_CONSOLE', '//console.valueimpression.com');
-define('URL_CONSOLE_AUTOLOGIN', '//console.valueimpression.com/home/atl');
-define('URL_VLI', '//valueimpression.com');
+define('DOMAIN_MASTER', 'apps.pubpower.io');
+// define('DOMAIN_AD', 'services.bilsyndication.com');
+// define('DOMAIN_CONSOLE', 'console.valueimpression.com');
+// define('URL_CONSOLE', '//console.valueimpression.com');
+// define('URL_CONSOLE_AUTOLOGIN', '//console.valueimpression.com/home/atl');
+// define('URL_VLI', '//valueimpression.com');
 define('URL_STATIC', '//assets.bilsyndication.com');
-define('URL_DASHBOARD_REGISTER', 'dashboard.valueimpression.com/Register');
+// define('URL_DASHBOARD_REGISTER', 'dashboard.valueimpression.com/Register');
 define('URL_DASHBOARD', ROOTDOMAIN);
-define('URL_ADS', '//' . DOMAIN_AD);
-define('URL_ADSENSE', '/adsense/index?f_step%5B%5D=5&f_step%5B%5D=4&f_step%5B%5D=3&f_step%5B%5D=2&f_step%5B%5D=1');
+// define('URL_ADS', '//' . DOMAIN_AD);
+// define('URL_ADSENSE', '/adsense/index?f_step%5B%5D=5&f_step%5B%5D=4&f_step%5B%5D=3&f_step%5B%5D=2&f_step%5B%5D=1');
 define('URL_LOGIN', '/login');
 define('URL_LOGOUT', '/logout');
 define('URL_USER', '/user/setting');
@@ -155,18 +152,22 @@ define('URL_REPORT', '/report');
 define('URL_DOMAIN', '/domain');
 define('URL_PAYMENT', '/payment');
 define('URL_LINK_AFFILIATE', '/link');
-define('URL_AUTO_LOGIN', 'https://aff.valueimpression.com/Login/');
+define('URL_AUTO_LOGIN', '/Login/');
 
-define('URL_BIDDER_CHANGE_DEMAND_STATUS', '/bidder/change_demand_status');
+// define('URL_BIDDER_CHANGE_DEMAND_STATUS', '/bidder/change_demand_status');
 
 define('URL_AJAX', '/ajax');
 define('URL_AJAX_DOMAIN_SEARCH', '/ajax/domain/search');
+
+// Druid report
+define("LINK_DRUID_REPORT", "https://query.vliplatform.com/druid/v2/sql/");
+define("AUTHORIZATION_DRUID", "Basic cmVhZG1hbjpMb3hpVVNKISEoODIhQA==");
 
 /**
  * CONST
  */
 define('LAYOUT_EMPTY', 'tpl.layout_empty.php');
-define('KEY_HANDLE_PASSWORD', 'ee@!3xx11r');
+define('KEY_HANDLE_PASSWORD', "as3df!");
 define('KEY_LOGIN_TOKEN', 'ee@!3xx1q#1r');
 
 define('EDIT', 'EDIT');

@@ -7,12 +7,12 @@ function showjson($object) {
 
 function is_valid_domain_name($domain_name) {
     return (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain_name) //valid chars check
-            && preg_match("/^.{1,253}$/", $domain_name) //overall length check
-            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain_name) ); //length of each label
+        && preg_match("/^.{1,253}$/", $domain_name) //overall length check
+        && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain_name)); //length of each label
 }
 
 function is_validate_domain_name($domain_name) {
-//    return (preg_match("/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/", $domain_name));
+    //    return (preg_match("/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/", $domain_name));
     return (preg_match("/^((https?|ftp|smtp):\/\/)?(www.)?([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain_name));
 }
 
@@ -21,7 +21,7 @@ function guestID() {
         return $_COOKIE['guest_id'];
     }
     $guest_id = getToken(6);
-//    $expire = (time() + 3600 * 24 * 365); // 365 day
+    //    $expire = (time() + 3600 * 24 * 365); // 365 day
     $expire = 2147483647; // 365 day
     setcookie("guest_id", $guest_id, $expire, '/', '.' . DOMAIN);
     return $guest_id;
@@ -81,9 +81,9 @@ function crypto_rand_secure($min, $max) {
         return $min;
     } // not so random...
     $log = log($range, 2);
-    $bytes = (int) ($log / 8) + 1; // length in bytes
-    $bits = (int) $log + 1; // length in bits
-    $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+    $bytes = (int)($log / 8) + 1; // length in bytes
+    $bits = (int)$log + 1; // length in bits
+    $filter = (int)(1 << $bits) - 1; // set all lower bits to 1
     do {
         $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
         $rnd = $rnd & $filter; // discard irrelevant bits
@@ -96,7 +96,7 @@ function getToken($length) {
     $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
     $codeAlphabet .= "0123456789";
-    for ($i = 0; $i < $length; $i++) {
+    for ($i = 0; $i < $length; $i ++) {
         $token .= $codeAlphabet[crypto_rand_secure(0, strlen($codeAlphabet))];
     }
     return $token;
@@ -106,14 +106,14 @@ function render_coupon($length) {
     $token = "";
     $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $codeAlphabet .= "0123456789";
-    for ($i = 0; $i < $length; $i++) {
+    for ($i = 0; $i < $length; $i ++) {
         $token .= $codeAlphabet[crypto_rand_secure(0, strlen($codeAlphabet))];
     }
     return $token;
 }
 
 /**
- * 
+ *
  * @param string $error
  * @return array
  */
@@ -128,7 +128,7 @@ function error($error) {
  */
 function render_password($password) {
     if (!$password) {
-        return false;
+        return FALSE;
     }
     $hanlde = md5(md5($password . KEY_HANDLE_PASSWORD));
     return $hanlde;
@@ -140,8 +140,7 @@ function render_password($password) {
  * @return type
  */
 function password_salt($password) {
-    $salt = sha1(md5($password));
-    $password = md5($password . $salt);
+    $password = md5(md5($password . KEY_HANDLE_PASSWORD));
     return $password;
 }
 
@@ -152,7 +151,7 @@ function password_salt($password) {
  */
 function render_login_token($user_id) {
     if (!$user_id) {
-        return false;
+        return FALSE;
     }
     $token = md5(md5($user_id . KEY_LOGIN_TOKEN));
     return $token;
@@ -164,7 +163,7 @@ function is_html($string) {
 }
 
 /**
- * 
+ *
  * @param string $id
  * @param string $message
  * @return boolean
@@ -174,7 +173,7 @@ function set_message($id, $message) {
 }
 
 /**
- * 
+ *
  * @param string $id
  * @return array
  */
@@ -188,7 +187,7 @@ function get_message($id) {
 }
 
 /**
- * 
+ *
  * @param string $id
  * @param string $message
  * @param second $time
@@ -203,7 +202,7 @@ if (!function_exists('set_cookie')) {
 }
 
 /**
- * 
+ *
  * @param string $id
  * @return array
  */
@@ -239,7 +238,7 @@ if (!function_exists('remove_cookie')) {
  * @param array $more
  * @return string
  */
-function build_image_url($src, $width = false, $height = false, $more = []) {
+function build_image_url($src, $width = FALSE, $height = FALSE, $more = []) {
     $options['src'] = $src;
     if ($width) {
         $options['w'] = $width;
@@ -253,25 +252,25 @@ function build_image_url($src, $width = false, $height = false, $more = []) {
 }
 
 /**
- * 
+ *
  * @param string $url
  * @return boolean
  */
 function check_img_exist($url) {
     $header = get_headers($url);
     if ($header[0] == 'HTTP/1.0 200 OK') {
-        return true;
+        return TRUE;
     } elseif ($header[0] == 'HTTP/1.1 302 Found') {
         $header2 = get_headers(str_replace(['Location: '], [''], $header[3]));
         if ($header2[0]) {
-            return true;
+            return TRUE;
         }
     }
-    return false;
+    return FALSE;
 }
 
 /**
- * 
+ *
  * @return type
  */
 //function get_calling_class() {
@@ -290,7 +289,7 @@ function check_img_exist($url) {
 //}
 
 /**
- * 
+ *
  * @param object $pagination
  * @return string
  */
@@ -303,9 +302,9 @@ function show_pagination_li_home($pagination) {
     if ($start >= $total) {
         $start = max(0, $total - (($total % $limit) == 0 ? $limit : ($total % $limit)));
     } else {
-        $start = max(0, (int) $start - ((int) $start % (int) $limit));
+        $start = max(0, (int)$start - ((int)$start % (int)$limit));
     }
-    $base_link = '<li><a href="' . strtr($url, array('%' => '%%')) . 'page=%d' . '">%s</a></li>';
+    $base_link = '<li><a href="' . strtr($url, ['%' => '%%']) . 'page=%d' . '">%s</a></li>';
     $out[] = $start == 0 ? '' : sprintf($base_link, $start / $limit, 'Prev');
     if ($start > $limit * $neighbors) {
         $out[] = sprintf($base_link, 1, '1');
@@ -313,15 +312,15 @@ function show_pagination_li_home($pagination) {
     if ($start > $limit * ($neighbors + 1)) {
         $out[] = '<li><span style="font-weight: bold;">...</span></li>';
     }
-    for ($nCont = $neighbors; $nCont >= 1; $nCont--) {
+    for ($nCont = $neighbors; $nCont >= 1; $nCont --) {
         if ($start >= $limit * $nCont) {
             $tmpStart = $start - $limit * $nCont;
             $out[] = sprintf($base_link, $tmpStart / $limit + 1, $tmpStart / $limit + 1);
         }
     }
     $out[] = '<li class="active"><span class="currentpage"><strong>' . ($start / $limit + 1) . '</strong></span></li>';
-    $tmpMaxPages = (int) (($total - 1) / $limit) * $limit;
-    for ($nCont = 1; $nCont <= $neighbors; $nCont++) {
+    $tmpMaxPages = (int)(($total - 1) / $limit) * $limit;
+    for ($nCont = 1; $nCont <= $neighbors; $nCont ++) {
         if ($start + $limit * $nCont <= $tmpMaxPages) {
             $tmpStart = $start + $limit * $nCont;
             $out[] = sprintf($base_link, $tmpStart / $limit + 1, $tmpStart / $limit + 1);
@@ -341,7 +340,7 @@ function show_pagination_li_home($pagination) {
 }
 
 function time_ago($time_ago) {
-//    $time_ago = strtotime($time_ago);
+    //    $time_ago = strtotime($time_ago);
     $cur_time = time();
     $time_elapsed = $cur_time - $time_ago;
     $seconds = $time_elapsed;
@@ -354,48 +353,42 @@ function time_ago($time_ago) {
     // Seconds
     if ($seconds <= 60) {
         return LANG_JUST_NOW;
-    }
-    //Minutes
+    } //Minutes
     else if ($minutes <= 60) {
         if ($minutes == 1) {
             return LANG_ONE_MINUTE_AGO;
         } else {
             return "$minutes " . LANG_MINUTE_AGO;
         }
-    }
-    //Hours
+    } //Hours
     else if ($hours <= 24) {
         if ($hours == 1) {
             return LANG_AN_HOUR_AGO;
         } else {
             return "$hours " . LANG_HOUR_AGO;
         }
-    }
-    //Days
+    } //Days
     else if ($days <= 7) {
         if ($days == 1) {
             return LANG_YESTERDAY;
         } else {
             return "$days " . LANG_DAY_AGO;
         }
-    }
-    //Weeks
+    } //Weeks
     else if ($weeks <= 4.3) {
         if ($weeks == 1) {
             return LANG_A_WEEK_AGO;
         } else {
             return "$weeks " . LANG_WEEK_AGO;
         }
-    }
-    //Months
+    } //Months
     else if ($months <= 12) {
         if ($months == 1) {
             return LANG_A_MONTH_AGO;
         } else {
             return "$months " . LANG_MONTH_AGO;
         }
-    }
-    //Years
+    } //Years
     else {
         if ($years == 1) {
             return LANG_ONE_YEAR_AGO;
@@ -417,7 +410,7 @@ function time_ago($time_ago) {
  */
 if (!function_exists('time_elapsed_string')) {
 
-    function time_elapsed_string($datetime, $full = false) {
+    function time_elapsed_string($datetime, $full = FALSE) {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $now = new DateTime;
         if (is_numeric($datetime)) {
@@ -429,7 +422,7 @@ if (!function_exists('time_elapsed_string')) {
         $diff->w = floor($diff->d / 7);
         $diff->d -= $diff->w * 7;
 
-        $string = array(
+        $string = [
             'y' => 'năm',
             'm' => 'tháng',
             'w' => 'tuần',
@@ -437,7 +430,7 @@ if (!function_exists('time_elapsed_string')) {
             'h' => 'giờ',
             'i' => 'phút',
             's' => 'giây',
-        );
+        ];
         foreach ($string as $k => &$v) {
             if ($diff->$k) {
                 $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? '' : '');
@@ -489,7 +482,7 @@ if (!function_exists('time_elapsed_string')) {
 if (!function_exists('is_json')) {
 
     function is_json($string) {
-        return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
+        return is_string($string) && is_array(json_decode($string, TRUE)) && (json_last_error() == JSON_ERROR_NONE) ? TRUE : FALSE;
     }
 
 }
@@ -520,7 +513,7 @@ if (!function_exists('build_breadcrumb')) {
                 $result .= '                <span>' . $value['title'] . '</span>';
                 $result .= '        </li>';
             }
-            $count++;
+            $count ++;
         }
         $result .= '    </ol>';
         $result .= '</nav>';
@@ -638,7 +631,7 @@ if (!function_exists('vietnamese_date')) {
         if (!$time) {
             $time = time();
         }
-        $lang = array();
+        $lang = [];
         $lang['sun'] = 'CN';
         $lang['mon'] = 'T2';
         $lang['tue'] = 'T3';
@@ -679,48 +672,49 @@ if (!function_exists('vietnamese_date')) {
         $lang['dec'] = 'T12';
 
         $format = str_replace("r", "D, d M Y H:i:s O", $format);
-        $format = str_replace(array("D", "M"), array("[D]", "[M]"), $format);
+        $format = str_replace(["D", "M"], ["[D]", "[M]"], $format);
         $return = date($format, $time);
 
-        $replaces = array(
-            '/\[Sun\](\W|$)/' => $lang['sun'] . "$1",
-            '/\[Mon\](\W|$)/' => $lang['mon'] . "$1",
-            '/\[Tue\](\W|$)/' => $lang['tue'] . "$1",
-            '/\[Wed\](\W|$)/' => $lang['wed'] . "$1",
-            '/\[Thu\](\W|$)/' => $lang['thu'] . "$1",
-            '/\[Fri\](\W|$)/' => $lang['fri'] . "$1",
-            '/\[Sat\](\W|$)/' => $lang['sat'] . "$1",
-            '/\[Jan\](\W|$)/' => $lang['jan'] . "$1",
-            '/\[Feb\](\W|$)/' => $lang['feb'] . "$1",
-            '/\[Mar\](\W|$)/' => $lang['mar'] . "$1",
-            '/\[Apr\](\W|$)/' => $lang['apr'] . "$1",
-            '/\[May\](\W|$)/' => $lang['may2'] . "$1",
-            '/\[Jun\](\W|$)/' => $lang['jun'] . "$1",
-            '/\[Jul\](\W|$)/' => $lang['jul'] . "$1",
-            '/\[Aug\](\W|$)/' => $lang['aug'] . "$1",
-            '/\[Sep\](\W|$)/' => $lang['sep'] . "$1",
-            '/\[Oct\](\W|$)/' => $lang['oct'] . "$1",
-            '/\[Nov\](\W|$)/' => $lang['nov'] . "$1",
-            '/\[Dec\](\W|$)/' => $lang['dec'] . "$1",
-            '/Sunday(\W|$)/' => $lang['sunday'] . "$1",
-            '/Monday(\W|$)/' => $lang['monday'] . "$1",
-            '/Tuesday(\W|$)/' => $lang['tuesday'] . "$1",
+        $replaces = [
+            '/\[Sun\](\W|$)/'   => $lang['sun'] . "$1",
+            '/\[Mon\](\W|$)/'   => $lang['mon'] . "$1",
+            '/\[Tue\](\W|$)/'   => $lang['tue'] . "$1",
+            '/\[Wed\](\W|$)/'   => $lang['wed'] . "$1",
+            '/\[Thu\](\W|$)/'   => $lang['thu'] . "$1",
+            '/\[Fri\](\W|$)/'   => $lang['fri'] . "$1",
+            '/\[Sat\](\W|$)/'   => $lang['sat'] . "$1",
+            '/\[Jan\](\W|$)/'   => $lang['jan'] . "$1",
+            '/\[Feb\](\W|$)/'   => $lang['feb'] . "$1",
+            '/\[Mar\](\W|$)/'   => $lang['mar'] . "$1",
+            '/\[Apr\](\W|$)/'   => $lang['apr'] . "$1",
+            '/\[May\](\W|$)/'   => $lang['may2'] . "$1",
+            '/\[Jun\](\W|$)/'   => $lang['jun'] . "$1",
+            '/\[Jul\](\W|$)/'   => $lang['jul'] . "$1",
+            '/\[Aug\](\W|$)/'   => $lang['aug'] . "$1",
+            '/\[Sep\](\W|$)/'   => $lang['sep'] . "$1",
+            '/\[Oct\](\W|$)/'   => $lang['oct'] . "$1",
+            '/\[Nov\](\W|$)/'   => $lang['nov'] . "$1",
+            '/\[Dec\](\W|$)/'   => $lang['dec'] . "$1",
+            '/Sunday(\W|$)/'    => $lang['sunday'] . "$1",
+            '/Monday(\W|$)/'    => $lang['monday'] . "$1",
+            '/Tuesday(\W|$)/'   => $lang['tuesday'] . "$1",
             '/Wednesday(\W|$)/' => $lang['wednesday'] . "$1",
-            '/Thursday(\W|$)/' => $lang['thursday'] . "$1",
-            '/Friday(\W|$)/' => $lang['friday'] . "$1",
-            '/Saturday(\W|$)/' => $lang['saturday'] . "$1",
-            '/January(\W|$)/' => $lang['january'] . "$1",
-            '/February(\W|$)/' => $lang['february'] . "$1",
-            '/March(\W|$)/' => $lang['march'] . "$1",
-            '/April(\W|$)/' => $lang['april'] . "$1",
-            '/May(\W|$)/' => $lang['may'] . "$1",
-            '/June(\W|$)/' => $lang['june'] . "$1",
-            '/July(\W|$)/' => $lang['july'] . "$1",
-            '/August(\W|$)/' => $lang['august'] . "$1",
+            '/Thursday(\W|$)/'  => $lang['thursday'] . "$1",
+            '/Friday(\W|$)/'    => $lang['friday'] . "$1",
+            '/Saturday(\W|$)/'  => $lang['saturday'] . "$1",
+            '/January(\W|$)/'   => $lang['january'] . "$1",
+            '/February(\W|$)/'  => $lang['february'] . "$1",
+            '/March(\W|$)/'     => $lang['march'] . "$1",
+            '/April(\W|$)/'     => $lang['april'] . "$1",
+            '/May(\W|$)/'       => $lang['may'] . "$1",
+            '/June(\W|$)/'      => $lang['june'] . "$1",
+            '/July(\W|$)/'      => $lang['july'] . "$1",
+            '/August(\W|$)/'    => $lang['august'] . "$1",
             '/September(\W|$)/' => $lang['september'] . "$1",
-            '/October(\W|$)/' => $lang['october'] . "$1",
-            '/November(\W|$)/' => $lang['november'] . "$1",
-            '/December(\W|$)/' => $lang['december'] . "$1");
+            '/October(\W|$)/'   => $lang['october'] . "$1",
+            '/November(\W|$)/'  => $lang['november'] . "$1",
+            '/December(\W|$)/'  => $lang['december'] . "$1"
+        ];
 
         return preg_replace(array_keys($replaces), array_values($replaces), $return);
     }
@@ -765,7 +759,7 @@ if (!function_exists('prepare_lazyload_content')) {
     function prepare_lazyload_content($html_string) {
         if ($html_string) {
             $dom = new \DOMDocument();
-            $libxml_previous_state = libxml_use_internal_errors(true);
+            $libxml_previous_state = libxml_use_internal_errors(TRUE);
             $dom->loadHTML(mb_convert_encoding($html_string, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             libxml_use_internal_errors($libxml_previous_state);
             $xpath = new \DOMXpath($dom);
@@ -801,7 +795,7 @@ if (!function_exists('get_lazyload_content')) {
     function get_lazyload_content($html_string) {
         if ($html_string) {
             $dom = new \DOMDocument();
-            $libxml_previous_state = libxml_use_internal_errors(true);
+            $libxml_previous_state = libxml_use_internal_errors(TRUE);
             $dom->loadHTML(mb_convert_encoding($html_string, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             libxml_use_internal_errors($libxml_previous_state);
             $xpath = new \DOMXpath($dom);
@@ -865,23 +859,23 @@ if (!function_exists('calculator_sell_price')) {
  */
 if (!function_exists('mailchimp_subscriber_status')) {
 
-    function mailchimp_subscriber_status($email, $status, $list_id, $api_key, $merge_fields = array('FNAME' => '', 'LNAME' => '')) {
-        $data = array(
-            'apikey' => $api_key,
+    function mailchimp_subscriber_status($email, $status, $list_id, $api_key, $merge_fields = ['FNAME' => '', 'LNAME' => '']) {
+        $data = [
+            'apikey'        => $api_key,
             'email_address' => $email,
-            'status' => $status,
-            'merge_fields' => $merge_fields
-        );
+            'status'        => $status,
+            'merge_fields'  => $merge_fields
+        ];
         $mch_api = curl_init(); // initialize cURL connection
 
         curl_setopt($mch_api, CURLOPT_URL, 'https://' . substr($api_key, strpos($api_key, '-') + 1) . '.api.mailchimp.com/3.0/lists/' . $list_id . '/members/' . md5(strtolower($data['email_address'])));
-        curl_setopt($mch_api, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: Basic ' . base64_encode('user:' . $api_key)));
+        curl_setopt($mch_api, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Authorization: Basic ' . base64_encode('user:' . $api_key)]);
         curl_setopt($mch_api, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
-        curl_setopt($mch_api, CURLOPT_RETURNTRANSFER, true); // return the API response
+        curl_setopt($mch_api, CURLOPT_RETURNTRANSFER, TRUE); // return the API response
         curl_setopt($mch_api, CURLOPT_CUSTOMREQUEST, 'PUT'); // method PUT
         curl_setopt($mch_api, CURLOPT_TIMEOUT, 10);
-        curl_setopt($mch_api, CURLOPT_POST, true);
-        curl_setopt($mch_api, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($mch_api, CURLOPT_POST, TRUE);
+        curl_setopt($mch_api, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($mch_api, CURLOPT_POSTFIELDS, json_encode($data)); // send data in json
 
         $result = curl_exec($mch_api);
@@ -918,7 +912,7 @@ if (!function_exists('get_array_by_key_of_array')) {
         }
         foreach ($b as $k => $value) {
             if ($type == 'object') {
-                $value = (array) $value;
+                $value = (array)$value;
             }
             $a[] = $value[$key];
         }
@@ -945,18 +939,34 @@ if (!function_exists('mkdir_r')) {
                 @mkdir($dir, $rights);
             }
         }
-        return true;
+        return TRUE;
     }
 
 }
 
 //sắp xếp đc cả số thập phân (float), lưu ý: khi sort xong thì $key trong $data[$key] sẽ thay đổi về dạng 0,1,2,3,4,5,6...
 function _orderBy($data, $field, $order = SORT_DESC) {     // SORT_ASC, SORT_DESC
-    $price = array();
+    $price = [];
+    $object = FALSE;
+    if (!$data) {
+        return $data;
+    }
     foreach ($data as $key => $row) {
+        if (is_object($row)) {
+            $object = TRUE;
+            $row = (array)$row;
+            $data[$key] = $row;
+        }
         $price[$key] = $row[$field];
     }
     array_multisort($price, $order, $data);
+    if ($object) {
+        foreach ($data as $key => $row) {
+            $row = (object)$row;
+            $data[$key] = $row;
+        }
+    }
+
     return $data;
 }
 
@@ -976,11 +986,11 @@ function printResponse($result) {
     echo json_encode($result);
 }
 
-function number_shorten($number, $precision = 3, $divisors = null) {
+function number_shorten($number, $precision = 3, $divisors = NULL) {
 
     // Setup default $divisors if not provided
     if (!isset($divisors)) {
-        $divisors = array(
+        $divisors = [
             pow(1000, 0) => '', // 1000^0 == 1
             pow(1000, 1) => 'K', // Thousand
             pow(1000, 2) => 'M', // Million
@@ -988,7 +998,7 @@ function number_shorten($number, $precision = 3, $divisors = null) {
             pow(1000, 4) => 'T', // Trillion
             pow(1000, 5) => 'Qa', // Quadrillion
             pow(1000, 6) => 'Qi', // Quintillion
-        );
+        ];
     }
 
     // Loop through each $divisor and find the
@@ -1038,10 +1048,10 @@ function number_format_reports($reports) {
 
 //ép kiểu dữ liệu boolean sang string: true => 'true', false => 'false'
 function boolean_to_string($boolean) {
-    if ($boolean === true) {
+    if ($boolean === TRUE) {
         return 'true';
     }
-    if ($boolean === false) {
+    if ($boolean === FALSE) {
         return 'false';
     }
     return ['error' => 'data not boolean'];
@@ -1054,7 +1064,7 @@ function sum_array_of_array($data, $field) {
     }
     $result = 0;
     foreach ($data as $value) {
-        $value = (array) $value;
+        $value = (array)$value;
         $result += $value[$field];
     }
     return $result;
@@ -1067,7 +1077,7 @@ function sum_array_of_array($data, $field) {
 if (!function_exists('ListCountry')) {
 
     function ListCountry() {
-        $countries = array(
+        $countries = [
             "AF" => "Afghanistan",
             "AL" => "Albania",
             "DZ" => "Algeria",
@@ -1307,7 +1317,7 @@ if (!function_exists('ListCountry')) {
             "YE" => "Yemen",
             "ZM" => "Zambia",
             "ZW" => "Zimbabwe"
-        );
+        ];
         return $countries;
     }
 
@@ -1318,14 +1328,14 @@ if (!function_exists('_curlPost')) {
     function _curlPost($url, $data) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
             curl_close($ch);
-            return false;
+            return FALSE;
         } else {
             curl_close($ch);
             return $result;

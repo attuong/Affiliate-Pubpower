@@ -3,15 +3,58 @@
 use core\Model;
 
 /**
- * Description of ReportModel 
- * 
- * @author Tuan 
+ * Description of ReportModel
+ *
+ * @author Tuan
  */
 class ReportModel extends Model {
 
     public function __construct($config = []) {
         parent::__construct($config);
-        $this->setDefaultTable(TABLE_REPORT_TAG);
+        $this->setDefaultTable(TABLE_REPORT_PUB);
+    }
+
+    public function Druid($sql) {
+        $headers = [
+            'Content-Type: application/json',
+            "Authorization: " . AUTHORIZATION_DRUID
+        ];
+        //create a new cURL resource
+        $ch = curl_init(LINK_DRUID_REPORT);
+
+        //attach encoded JSON string to the POST fields
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($sql));
+        //set the content type to application/json and header
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        //return response instead of outputting
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        //execute the POST request
+        $result = curl_exec($ch);
+        //close cURL resource
+        curl_close($ch);
+
+        if (empty($result)) {
+            return error("No response received");
+        }
+
+        return $result;
+    }
+
+    public function findOneDruid($sql) {
+        $result = $this->Druid(($sql));
+        if (!$result) {
+            return FALSE;
+        }
+
+        $data = json_decode($result, TRUE);
+        if (!$data) {
+            return FALSE;
+        }
+        if (!empty($data['error'])) {
+            return $data;
+        }
+
+        return $data[0];
     }
 
     public function handle_input_for_filter($inputs) {
@@ -28,25 +71,12 @@ class ReportModel extends Model {
         return $inputs;
     }
 
-    public function handle_input_for_toplist($inputs) {
-        if (empty($inputs['start_day']) || empty($inputs['end_day'])) {
-            $inputs['start_day'] = date('Ymd', strtotime('first day of this month'));
-            $inputs['end_day'] = date('Ymd', strtotime('today'));
-        }
-        return $inputs;
-    }
-
-    public function filters($filters) {
-        $user_login = UserModel::getInstance()->get_user_login();
-        $query['user_id'] = $user_login->id;
-
-        return $query;
-    }
-
     public function list_by_filters($filters) {
-
+        $userLogin = UserModel::getInstance()->get_user_login();
+        $pubs = UserModel::getInstance()->getPublishersByAffiliate($userLogin->id, ["id", "email", "status"]);
+        $PubIDs = get_array_by_key_of_array($pubs, "id", 'object');
         $time = $this->get_time_month($filters['start_month'], $filters['end_month']);
-        $query = $this->filters($filters);
+        $query = ["user_id" => $userLogin->id];
 
         $data = [];
         if (!$time) {
@@ -54,33 +84,31 @@ class ReportModel extends Model {
         }
 
         foreach ($time as $month) {
-            $query['month'] = $month;
-            $reports = $this->setTable(TABLE_REPORT_AFFILIATE)->findOne($query);
-            if (!$reports) {
-                continue;
+            // $query['month'] = $month;
+            // $reports = $this->setTable(TABLE_REPORT_PUB)->findOne($query);
+            // if (!$reports) {
+            //     continue;
+            // }
+            // $data[] = $reports;
+
+
+            // $start_date = date("Y-m-d", strtotime($inputs['start_day']));
+            // $end_date = date("Y-m-d", strtotime($inputs['end_day']));
+            $sql = [
+                "query"   => "SELECT SUM(netRevenue) as netRevenue FROM \"pw_tag\" WHERE FLOOR(__time TO DAY) like '" . $month . "%'  AND pubId IN (" . implode($PubIDs, ",") . ")",
+                "context" => ["sqlTimeZone" => "America/New_York"]
+            ];
+            $reprot = $this->findOneDruid($sql);
+            if (!empty($reprot['error'])) {
+                return $reprot;
             }
-            $data[] = $reports;
+            $data[] = (object)[
+                "month"      => $month,
+                "revenue"    => number_format($reprot["netRevenue"], 2),
+                "commission" => number_format($reprot["netRevenue"] * 0.03, 2),
+            ];
         }
         return $data;
-    }
-
-    //date
-    public function get_time_date($start, $end) {
-        if ((int) $start < 20181226) {
-            $start = 20181226;
-        }
-        $times = intervals($start, $end, 'Ymd');
-        $times = array_reverse($times);
-        $today = date('Ymd', strtotime('today'));
-        if ($times) {
-            foreach ($times as $key => $time) {
-                if ($time > $today) {
-                    unset($times[$key]);
-                }
-            }
-        }
-
-        return $times;
     }
 
     //month
@@ -89,26 +117,10 @@ class ReportModel extends Model {
         $max_month = $end . '01';
 
         $times = [];
-        for ($i = 0; date('Ymd', strtotime("+" . $i . " MONTH ", strtotime($min_month))) <= $max_month; $i++) {
-            $times[] = date('Ym', strtotime("+" . $i . " MONTH ", strtotime($min_month)));
+        for ($i = 0; date('Ymd', strtotime("+" . $i . " MONTH ", strtotime($min_month))) <= $max_month; $i ++) {
+            $times[] = date('Y-m', strtotime("+" . $i . " MONTH ", strtotime($min_month)));
         }
         return array_reverse($times);
-    }
-
-    public function get_by_date($query, $date) {
-        $query['date'] = $date;
-        $field = [
-            'SUM(revenue) as revenue',
-            'SUM(paid) as paid',
-            'SUM(passback) as passback',
-        ];
-
-        //get report 
-        $reports = $this->setTable(TABLE_REPORT_TAG_FOR_PUBLISHER)->findOne($query, $field);
-        if ($reports) {
-            $reports->date = $date;
-        }
-        return $reports;
     }
 
     public function get_report_website_by_month($month) {
@@ -120,52 +132,32 @@ class ReportModel extends Model {
         $data = [];
         foreach ($domains as $domain) {
             $revenue = $this->get_revenue_for_domain_by_month($domain->id, $month);
-            if (empty($revenue->revenue)) {
+            if (!empty($revenue['error'])) {
+                return $revenue;
+            }
+            if (empty($revenue)) {
                 continue;
             }
-            $domain->revenue = $revenue->revenue;
+            $domain->revenue = number_format($revenue, 2);
+            $domain->commission = number_format($revenue * 0.03, 2);
             $data[] = $domain;
+        }
+        if ( $data ){
+            $data = _orderBy($data, "revenue");
         }
         return $data;
     }
 
     public function get_revenue_for_domain_by_month($domain_id, $month) {
-        $user_login = UserModel::getInstance()->get_user_login();
-        $query = [
-            'domain_id' => $domain_id,
-            'date' => ['$like' => "{$month}%"],
-            'aff_id' => $user_login->id
+        $sql = [
+            "query"   => "SELECT SUM(netRevenue) as netRevenue FROM \"pw_tag\" WHERE FLOOR(__time TO DAY) like '" . $month . "%'  AND inventoryId IN (" . $domain_id . ")",
+            "context" => ["sqlTimeZone" => "America/New_York"]
         ];
-        $field = ['SUM(revenue) as revenue'];
-        $report = $this->setTable(TABLE_REPORT_TAG_FOR_PUBLISHER)->findOne($query, $field);
-        return $report;
+        $report = $this->findOneDruid($sql);
+        if (!empty($report['error'])) {
+            return $report;
+        }
+        return !empty($report["netRevenue"]) ? $report["netRevenue"] : 0;
     }
 
-//
-//    public function get_report_publisher_by_month($month) {
-//        $publishers = UserModel::getInstance()->getAllPublisherForAffiliate();
-//        if (!$publishers) {
-//            return [];
-//        }
-//
-//        $data = [];
-//        foreach ($publishers as $user) {
-//            $revenue = $this->get_revenue_for_publisher_by_month($user->id, $month);
-//            $user->revenue = $revenue->revenue;
-//            $data[] = $user;
-//        }
-//        return $data;
-//    }
-//
-//    public function get_revenue_for_publisher_by_month($user_id, $month) {
-//        $user_login = UserModel::getInstance()->get_user_login();
-//        $query = [
-//            'user_id' => $user_id,
-//            'date' => ['$like' => "{$month}%"],
-//            'presenter' => $user_login->id
-//        ];
-//        $field = ['SUM(revenue) as revenue'];
-//        $report = $this->setTable(TABLE_REPORT_TAG_FOR_PUBLISHER)->findOne($query, $field);
-//        return $report;
-//    }
 }

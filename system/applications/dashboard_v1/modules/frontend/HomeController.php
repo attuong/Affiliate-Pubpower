@@ -102,7 +102,6 @@ class HomeController extends Controller {
         if ($this->user_login) {
             redirect(URL_DASHBOARD);
         }
-
         if ($this->input->post()) {
             $inputs = $this->input->getAllPost(['email', 'password', 'remember']);
             $validate = $this->UserModel->validate_login($inputs);

@@ -48,4 +48,17 @@ class ReportController extends Controller {
         $this->load->view($this->assign);
     }
 
+    public function filter_website_by_reportAction() {
+        $month = $this->input->get('month');
+        if (!$month) {
+            $this->template->page_not_found($this->assign);
+            exit();
+        }
+
+        $report_websites = $this->ReportModel->get_report_website_by_month($month);
+        $this->assign['report_websites'] = $report_websites;
+
+        $this->template->setLayout(LAYOUT_EMPTY);
+        $this->load->view($this->assign);
+    }
 }

@@ -50,9 +50,9 @@
                                         <?php if (!empty($reports)): ?>
                                             <?php foreach ($reports as $report): ?>
                                                 <tr style="letter-spacing: 1px" data-month="<?= $report->month ?>">
-                                                    <td><?= date('Y/m', strtotime($report->month . '01')) ?></td>
-                                                    <td>$<?= number_format($report->revenue, 2) ?></td>
-                                                    <td>$<?= number_format($report->commission, 2) ?></td>
+                                                    <td><?= date('Y/m', strtotime($report->month . '-01')) ?></td>
+                                                    <td>$<?= $report->revenue ?></td>
+                                                    <td>$<?= $report->commission ?></td>
                                                     <td class=""><a href="javascript:void(0)" data-toggle="tooltip" title="Filter by Websites" class="filter_websites"><i class="fas fa-globe-americas"></i></a></td>
                                                 </tr>
                                                 <tr id="filter-<?= $report->month ?>" class="result-filter d-none"><td colspan="100%"></td></tr>
@@ -81,7 +81,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/ajax/report/filter_website_by_report',
+                url: '/report/filter_website_by_report',
                 data: {month: month}
             }).done(function (result) {
                 if (result.error) {

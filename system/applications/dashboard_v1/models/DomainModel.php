@@ -14,9 +14,9 @@ class DomainModel extends Model {
         $this->setDefaultTable(TABLE_DOMAIN);
     }
 
-//    public function handle_inputs_for_filters($inputs) {
-//        return $inputs;
-//    }
+    //    public function handle_inputs_for_filters($inputs) {
+    //        return $inputs;
+    //    }
 
     public function list_by_filters($filters = [], $limit = FALSE) {
         $user = UserModel::getInstance()->get_user_login();
@@ -36,8 +36,15 @@ class DomainModel extends Model {
 
     public function getAllDomainForAffiliate() {
         $user = UserModel::getInstance()->get_user_login();
-        $query = ['aff_id' => $user->id];
-        $domains = $this->find($query);
+        $Pubs = UserModel::getInstance()->getPublishersByAffiliate($user->id);
+        if (!$Pubs) {
+            return [];
+        }
+        $PubIDs = get_array_by_key_of_array($Pubs, "id", 'object');
+        $query = [
+            'user_id' => ['$in' => $PubIDs],
+        ];
+        $domains = $this->find($query, ["id","name"]);
         return $domains;
     }
 

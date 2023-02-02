@@ -55,7 +55,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function insertQuery() {
@@ -68,7 +68,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function updateQuery() {
@@ -84,7 +84,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function deleteQuery() {
@@ -97,7 +97,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function sumQuery() {
@@ -105,22 +105,22 @@ class QueryPattern {
             return $this->error(ERROR_NO_TABLE);
         }
         $_field = (!$this->field) ? '*' : implode(',', $this->field);
-//        if (isset($_GET['f'])) { // DEBUG
-//            foreach ($this->field as $key => $value) {
-//                $this->field[$key] = "SUM($value) as total_$value";
-//            }
-//            $_field = (!$this->field) ? '*' : implode(',', $this->field);
-//            $sql = "SELECT $_field AS total FROM `$this->table` " . $this->condition();
-//            $this->flushDataQuery();
-//            return $sql;
-//        }
+        //        if (isset($_GET['f'])) { // DEBUG
+        //            foreach ($this->field as $key => $value) {
+        //                $this->field[$key] = "SUM($value) as total_$value";
+        //            }
+        //            $_field = (!$this->field) ? '*' : implode(',', $this->field);
+        //            $sql = "SELECT $_field AS total FROM `$this->table` " . $this->condition();
+        //            $this->flushDataQuery();
+        //            return $sql;
+        //        }
         $sql = "SELECT SUM($_field) AS total FROM `$this->table` " . $this->condition();
         $this->flushDataQuery();
         return $sql;
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function countQuery() {
@@ -147,7 +147,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function selectQuery() {
@@ -176,7 +176,7 @@ class QueryPattern {
             if ($this->order === 'RAND()' || in_array('RAND()', $this->order)) {
                 $sql .= "RAND()";
             } else {
-                $_order = array();
+                $_order = [];
                 foreach ($this->order as $o_field => $o_value) {
                     $o_explode_value = explode("|", $o_value);
                     if (count($o_explode_value) > 1 && strtolower($o_explode_value[0]) === 'field') {
@@ -196,7 +196,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @return \QueryPattern
      */
     public function condition() {
@@ -204,7 +204,7 @@ class QueryPattern {
             return FALSE;
         }
         $return = " WHERE ";
-        $_ors = $_ands = array();
+        $_ors = $_ands = [];
         foreach ($this->query as $field => $value) {
             if ($field === '$or') {
                 // MULTI OR
@@ -252,6 +252,8 @@ class QueryPattern {
                 // DEFAULT QUERY
                 if (is_array($value)) {
                     $_ands = array_merge($_ands, $this->condition_cmd($field, $value));
+                } else if ($value === NULL) {
+                    $_ands[] = "$field is null";
                 } else {
                     if (!is_int($value)) {
                         $value = "'" . $this->escape($value) . "'";
@@ -265,13 +267,13 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param string $field
      * @param array $query
      * @return \QueryPattern
      */
-    public function condition_cmd($field, $query = array()) {
-        $return = array();
+    public function condition_cmd($field, $query = []) {
+        $return = [];
         foreach ($query as $cmd => $value) {
             if (!is_int($value) && !is_array($value)) {
                 $value = "'" . $this->escape($value) . "'";
@@ -282,7 +284,7 @@ class QueryPattern {
                     break;
 
                 case '$or':
-                    $_ands = array();
+                    $_ands = [];
                     foreach ($value as $or_key => $or_value) {
                         if (is_array($or_value)) {
                             $_ands = array_merge($_ands, $this->condition_cmd($field, $or_value));
@@ -322,7 +324,7 @@ class QueryPattern {
                     break;
 
                 case '$in':
-                    $in = array();
+                    $in = [];
                     foreach ($value as $_value) {
                         if (!is_int($_value)) {
                             $_value = "'" . $this->escape($_value) . "'";
@@ -333,7 +335,7 @@ class QueryPattern {
                     break;
 
                 case '$nin':
-                    $in = array();
+                    $in = [];
                     foreach ($value as $_value) {
                         if (!is_int($_value)) {
                             $_value = "'" . $this->escape($_value) . "'";
@@ -350,7 +352,7 @@ class QueryPattern {
                     break;
 
                 default:
-                    return $this->error(str_replace(array('{cmd}'), array($cmd), ERROR_NO_CMD));
+                    return $this->error(str_replace(['{cmd}'], [$cmd], ERROR_NO_CMD));
                     break;
             }
         }
@@ -358,7 +360,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param string $table
      * @return \MySQL
      */
@@ -372,11 +374,11 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param array $query
      * @return \MySQL
      */
-    public function setQuery($query = array()) {
+    public function setQuery($query = []) {
         $this->query = $query;
         return $this;
     }
@@ -386,11 +388,11 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param array $field
      * @return \MySQL
      */
-    public function setField($field = array()) {
+    public function setField($field = []) {
         $this->field = $field;
         return $this;
     }
@@ -400,7 +402,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param array $order
      * @return \MySQL
      */
@@ -414,7 +416,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param string|integer|boolean $limit
      * @return \MySQL
      */
@@ -428,7 +430,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param array $data
      * @return \MySQL
      */
@@ -442,7 +444,7 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param string|integer|boolean $group
      * @return \MySQL
      */
@@ -456,13 +458,13 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param string $join_type
      * @param string $table
      * @param array $on
      * @return \MySQL
      */
-    public function setJoin($join_type, $table = false, $on = false) {
+    public function setJoin($join_type, $table = FALSE, $on = FALSE) {
         $this->join[$join_type]['table'] = $table;
         $this->join[$join_type]['on'] = $on;
         return $this;
@@ -473,12 +475,12 @@ class QueryPattern {
     }
 
     /**
-     * 
+     *
      * @param string $error
      * @return array
      */
     public function error($error) {
-        return array('error' => $error);
+        return ['error' => $error];
     }
 
 }

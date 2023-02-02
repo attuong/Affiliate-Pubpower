@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="b01759fa-2c8a-4ad4-9b69-0d168425d52e" name="Affiliate Pubpower">
-        <fileTransfer rootFolder="/home/yamato/sites/affiliate-program.pubpower.io" accessType="SFTP" host="23.92.74.98" port="36585" sshConfigId="616e84c0-909e-49d4-9b0f-06e1f826e1ad" sshConfig="yamato@23.92.74.98:36585 password">
+      <webServer id="a637a273-4a9d-41bf-b3ea-9b8c2953abbb" name="affiliate pubpower">
+        <fileTransfer rootFolder="/home/yamato/sites/affiliate-program.pubpower.io" accessType="SFTP" host="23.92.74.98" port="36585" sshConfigId="da153812-0358-4a77-94ea-2e54181840d6" sshConfig="yamato@23.92.74.98:36585 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
