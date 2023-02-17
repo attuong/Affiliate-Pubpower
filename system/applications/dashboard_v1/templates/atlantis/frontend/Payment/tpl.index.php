@@ -3,9 +3,7 @@
         <h4 class="page-title">Payments</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="<?= ROOTDOMAIN; ?>" title="Dashboard">
-                    <i class="flaticon-home"></i>
-                </a>
+                <a href="<?= ROOTDOMAIN; ?>" title="Dashboard"> <i class="flaticon-home"></i> </a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -47,18 +45,24 @@
                                 <?php if (!empty($payments)) { ?>
                                     <?php foreach ($payments as $key => $payment) { ?>
                                         <tr>
-                                            <td><?= date('m/Y', strtotime($payment->month . '01')) ?></td>
+                                            <td><?= date('m/Y', strtotime($payment->end_date)) ?></td>
                                             <td>$<?= number_format($payment->amount, 2) ?></td>
                                             <td><?= $payment->payment_date ? date('d/m/Y', strtotime($payment->payment_date)) : '' ?></td>
-                                            <td><?= $payment->payment_time ? date('m/Y', strtotime($payment->payment_time)) : '' ?></td>
+                                            <td><?= $payment->status == 2 && $payment->paid_date ? date('d/m/Y', strtotime($payment->paid_date)) : '' ?></td>
                                             <td>
                                                 <span class="short-text"><?= strlen($payment->note) > 20 ? substr($payment->note, 0, 20) . '...<a href="javascript:void(0)" class="view-more text-info">(Show)</a>' : $payment->note ?></span>
                                                 <span class="show-more note-full d-none"><?= $payment->note ?></span>
                                             </td>
                                             <td>
-                                                    <span class="<?= $payment->status == 'pending' ? 'text-warning' : 'text-success' ?>">
-                                                        <?= $payment->status == 'pending' ? '<i class="fas fa-clock"></i>' : '<i class="fas fa-chevron-circle-down"></i>' ?> <?= $payment->status ?>
+                                                <?php if ($payment->status == 1): ?>
+                                                    <span class="text-warning">
+                                                        <i class="fas fa-clock"></i> Pending
                                                     </span>
+                                                <?php else : ?>
+                                                    <span class="text-success">
+                                                        <i class="fas fa-chevron-circle-down"></i> Paid
+                                                    </span>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -81,7 +85,10 @@
                             </div>
                             <div class="col-sm-7">
                                 <?= $pagination->show_with_ul(); ?>
-                                <style>.pagination{margin: 0;float: right;}</style>
+                                <style>.pagination {
+                                        margin: 0;
+                                        float: right;
+                                    }</style>
                             </div>
                         <?php endif; ?>
                     </div>

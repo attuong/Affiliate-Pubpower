@@ -1,7 +1,7 @@
 <?php if (isset($success_message)): ?>
     <script type="text/javascript">
         $(document).ready(function () {
-            swal("Good job!", "<?= $success_message && $success_message != true ? $success_message : 'Success!'; ?>", {
+            swal("Good job!", "<?= $success_message && $success_message != TRUE ? $success_message : 'Success!'; ?>", {
                 icon: "success",
                 buttons: {
                     confirm: {
@@ -36,9 +36,7 @@
         <h4 class="page-title">Users</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="<?= ROOTDOMAIN; ?>">
-                    <i class="flaticon-home"></i>
-                </a>
+                <a href="<?= ROOTDOMAIN; ?>"> <i class="flaticon-home"></i> </a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -72,21 +70,22 @@
                                             <input type="text" class="form-control" name="email" value="<?= isset($user->email) ? $user->email : '' ?>" readonly style="cursor: not-allowed;">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-control-label">Payment Method <sup class="text-danger">*</sup></label>
-                                            <select class="form-control black payment_method" name="payment_method" >
-                                                <option value="paypal" <?= isset($billing->payment_method) && $billing->payment_method == "paypal" ? 'selected' : '' ?>>PayPal</option>
-                                                <option value="bank" <?= isset($billing->payment_method) && $billing->payment_method == "bank" ? 'selected' : '' ?>>Wire Transfer </option>
-                                                <option value="payoneer" <?= isset($billing->payment_method) && $billing->payment_method == "payoneer" ? 'selected' : '' ?>>Payoneer</option>
-                                                <option value="currency" <?= isset($billing->payment_method) && $billing->payment_method == "currency" ? 'selected' : '' ?>>Currency</option>
+                                            <label class="form-control-label">Payment Method
+                                                <sup class="text-danger">*</sup></label>
+                                            <select class="form-control black payment_method" name="method">
+                                                <option value="bank" <?= isset($billing->method) && $billing->method == "bank" ? 'selected' : '' ?>>Wire Transfer</option>
+                                                <option value="payoneer" <?= isset($billing->method) && $billing->method == "payoneer" ? 'selected' : '' ?>>Payoneer</option>
                                             </select>
                                         </div>
-                                        <div class="form-group S-PPPO" <?= isset($billing->payment_method) && !in_array($billing->payment_method, ['paypal', 'payoneer']) ? 'style="display: none"' : '' ?>>
-                                            <label class="form-control-label">Payment Email <sup class="text-danger">*</sup></label>
-                                            <input type="text" class="form-control" value="<?= isset($billing->payment_email) ? $billing->payment_email : '' ?>" name="payment_email">
+                                        <div class="form-group S-PPPO" <?= isset($billing->method) && !in_array($billing->method, ['paypal', 'payoneer']) ? 'style="display: none"' : '' ?>>
+                                            <label class="form-control-label">Payment Email
+                                                <sup class="text-danger">*</sup></label>
+                                            <input type="text" class="form-control" value="<?= $billing->method == "payoneer" ? $billing->payoneer_email : $billing->paypal_email ?>" name="payment_email">
                                         </div>
-                                        <div class="form-group S-COIN p-0" <?= isset($billing->payment_method) && $billing->payment_method != 'coin' ? 'style="display: none"' : '' ?>>
+                                        <div class="form-group S-COIN p-0" <?= isset($billing->method) && $billing->method != 'coin' ? 'style="display: none"' : '' ?>>
                                             <div class="form-group">
-                                                <label class="form-control-label">Crypto Currency <sup class="text-danger">*</sup></label>
+                                                <label class="form-control-label">Crypto Currency
+                                                    <sup class="text-danger">*</sup></label>
                                                 <select class="form-control crypto_currency" name="crypto_currency">
                                                     <option value="BTC" <?= isset($billing->crypto_currency) && $billing->crypto_currency == "BTC" ? 'selected' : '' ?>>Bitcoin (BTC)</option>
                                                     <option value="BCH" <?= isset($billing->crypto_currency) && $billing->crypto_currency == "BCH" ? 'selected' : '' ?>>Bitcoin Cash (BCH)</option>
@@ -99,28 +98,34 @@
                                                     <span id="minumum">100</span> USD</p>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-control-label">Wallet ID <sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control" name="wallet_id" value="<?= isset($billing->wallet_id) ? $billing->wallet_id : '' ?>" >
+                                                <label class="form-control-label">Wallet ID
+                                                    <sup class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control" name="wallet_id" value="<?= isset($billing->wallet_id) ? $billing->wallet_id : '' ?>">
                                             </div>
                                         </div>
-                                        <div class="form-group S-BANK p-0" <?= isset($billing->payment_method) && $billing->payment_method != 'bank' ? 'style="display: none"' : '' ?>>
+                                        <div class="form-group S-BANK p-0" <?= isset($billing->method) && $billing->method != 'bank' ? 'style="display: none"' : '' ?>>
                                             <div class="form-group">
-                                                <p style="color: red;text-align: center;">Minimum Payment Threshold: <span id="minumum">1000</span> USD</p>
+                                                <div style="color: red;text-align: center;">Minimum Payment Threshold:<span id="minumum">1500</span> USD</div>
+                                                <p style="color: red;text-align: center;">Please choose other payment methods if your revenue has not reached $1500 for the best support.</p>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-control-label">Beneficiary Name <sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control" name="beneficiary_name" value="<?= isset($billing->beneficiary_name) ? $billing->beneficiary_name : '' ?>" >
+                                                <label class="form-control-label">Beneficiary Name
+                                                    <sup class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control" name="beneficiary_name" value="<?= isset($billing->beneficiary_name) ? $billing->beneficiary_name : '' ?>">
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-control-label">Bank Name <sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control" name="bank_name" value="<?= isset($billing->bank_name) ? $billing->bank_name : '' ?>" >
+                                                <label class="form-control-label">Bank Name
+                                                    <sup class="text-danger">*</sup></label>
+                                                <input type="text" class="form-control" name="bank_name" value="<?= isset($billing->bank_name) ? $billing->bank_name : '' ?>">
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-control-label">Bank Address <sup class="text-danger">*</sup></label>
+                                                <label class="form-control-label">Bank Address
+                                                    <sup class="text-danger">*</sup></label>
                                                 <textarea type="text" rows="2" class="form-control" name="bank_address"><?= isset($billing->bank_address) ? $billing->bank_address : '' ?></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-control-label">Bank Account Number <sup class="text-danger">*</sup></label>
+                                                <label class="form-control-label">Bank Account Number
+                                                    <sup class="text-danger">*</sup></label>
                                                 <input type="number" class="form-control" name="bank_account_number" value="<?= isset($billing->bank_account_number) && $billing->bank_account_number ? $billing->bank_account_number : '' ?>">
                                             </div>
                                             <div class="form-group">
@@ -154,6 +159,7 @@
         var payment_method = $(".payment_method");
         ChangeMethod();
         payment_method.change(ChangeMethod);
+
         function ChangeMethod() {
             var payment = $(".payment_method").val();
             if (payment == 'bank') {
@@ -175,6 +181,7 @@
 
         $(".crypto_currency").change(ChangeCurrency)
         ChangeCurrency()
+
         function ChangeCurrency() {
 
             var Method = $(".payment_method").val();

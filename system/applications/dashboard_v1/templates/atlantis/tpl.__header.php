@@ -3,11 +3,10 @@
     <div class="logo-header" data-background-color="<?= $theme_settings->logo; ?>">
 
         <a href="<?= ROOTDOMAIN ?>" class="logo">
-            <?php if ($is_local): ?>
-                <img src="//valueimpression.com/images/logo/valueImpression-white.svg" alt="navbar brand" class="navbar-brand" style="width: 145px;"/>
-                <sup style="color:<?= $theme_settings->logo_sup; ?>;font-weight: 500;">Local</sup>
-            <?php else: ?>
+            <?php if (!empty($is_system) && $is_system == "VLI"): ?>
                 <img src="//valueimpression.com/images/logo/valueImpression-white.svg" alt="navbar brand" class="navbar-brand" style="width: 170px;"/>
+            <?php else: ?>
+                <img src="https://pubpower.io/img/pubpower-logo.png" alt="navbar brand" class="navbar-brand" style="width: 170px;"/>
             <?php endif; ?>
         </a>
         <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">

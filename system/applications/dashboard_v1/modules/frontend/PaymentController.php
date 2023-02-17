@@ -23,7 +23,7 @@ class PaymentController extends Controller {
         $filters = $this->input->filters();
         $this->assign['filters'] = $filters;
 
-        $payments = $this->PaymentModel->list_by_filters($filters, ['month' => 'DESC', 'user_id' => 'DESC'], $this->pagination->limit_string);
+        $payments = $this->PaymentModel->list_by_filters($filters, ['end_date' => 'DESC', 'user_id' => 'DESC'], $this->pagination->limit_string);
         $this->assign['payments'] = $payments;
 
         $total = $this->PaymentModel->getTotal();

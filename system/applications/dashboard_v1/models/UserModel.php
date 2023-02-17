@@ -11,19 +11,19 @@ class UserModel extends Model {
 
     protected $cookie_name = 'ldsre_sadmacc';
 
-    public function __construct($config = array()) {
+    public function __construct($config = []) {
         parent::__construct($config);
         $this->setDefaultTable(TABLE_USER);
     }
 
     /**
-     * 
+     *
      * @param object $user
      * @return boolean|object
      */
     public function extend($user) {
         if (!$user) {
-            return false;
+            return FALSE;
         }
         $user->fullname = $user->first_name . " " . $user->last_name;
         return $user;
@@ -38,7 +38,7 @@ class UserModel extends Model {
         if (isset($inputs['password']) && isset($inputs['retype_password']) && $inputs['password'] != $inputs['retype_password']) {
             return error('Password does not match the retype password');
         }
-        return true;
+        return TRUE;
     }
 
     /**
@@ -75,7 +75,7 @@ class UserModel extends Model {
      * @return boolean|array
      */
     public function validate_create_account($inputs) {
-        $error = false;
+        $error = FALSE;
         if (!isset($inputs['email']) || !$inputs['email']) {
             $error = 'Email is a required field';
         }
@@ -97,7 +97,7 @@ class UserModel extends Model {
         if ($error) {
             return error($error);
         }
-        return true;
+        return TRUE;
     }
 
     /**
@@ -110,7 +110,7 @@ class UserModel extends Model {
             $user = $this->getByEmail($inputs['email']);
             return $user;
         }
-        return false;
+        return FALSE;
     }
 
     /**
@@ -136,7 +136,7 @@ class UserModel extends Model {
             }
             return $new_user_id;
         }
-        return false;
+        return FALSE;
     }
 
     /**
@@ -168,7 +168,7 @@ class UserModel extends Model {
      * @return boolean
      */
     public function validate_login($inputs) {
-        $error = false;
+        $error = FALSE;
         if (!isset($inputs['email']) || !$inputs['email']) {
             $error = "Please enter email!";
         }
@@ -188,12 +188,12 @@ class UserModel extends Model {
      */
     public function login($inputs) {
         $query = [
-            'email' => $inputs['email'],
-            'password' => password_salt($inputs['password']),
+            'email'      => $inputs['email'],
+            'password'   => password_salt($inputs['password']),
             'permission' => [
                 '$in' => [2, 8]
             ],
-            'status' => 1
+            'status'     => 1
         ];
         $field = ['id', 'email', 'login_token'];
         $user = $this->findOne($query, $field);
@@ -206,7 +206,7 @@ class UserModel extends Model {
     }
 
     /**
-     * 
+     *
      * @param object $user
      * @param boolean $remember
      * @param number $expire
@@ -214,12 +214,12 @@ class UserModel extends Model {
      */
     public function set_login($user, $remember, $expire = 15) {
         if (!$user) {
-            return false;
+            return FALSE;
         }
         $_expire = (time() + 3600 * 24 * $expire); // 15day
         if (!$remember) {
             $_SESSION[$this->cookie_name] = $user->login_token;
-            $return = true;
+            $return = TRUE;
         } else {
             $return = setcookie($this->cookie_name, $user->login_token, $_expire, '/', '.' . DOMAIN);
         }
@@ -238,11 +238,11 @@ class UserModel extends Model {
             $token = $_COOKIE[$this->cookie_name];
         }
         if (!isset($token)) {
-            return false;
+            return FALSE;
         }
         $user = $this->extend($this->getByToken($token));
         if (!$user) {
-            return false;
+            return FALSE;
         }
         return $user;
     }
@@ -253,9 +253,9 @@ class UserModel extends Model {
      * @param type $field
      * @return type
      */
-    public function getByToken($token, $field = [], $user_profile = true) {
+    public function getByToken($token, $field = [], $user_profile = TRUE) {
         if (!$token) {
-            return false;
+            return FALSE;
         }
         $query = ['login_token' => $token, 'status' => 1];
         $user = $this->db->setTable(TABLE_USER)->setQuery($query)->setField($field)->setLimit(1)->findOne();
@@ -275,7 +275,7 @@ class UserModel extends Model {
         }
 
         setcookie("_admin", "", time() - 3600, '/', '.' . DOMAIN);
-        return true;
+        return TRUE;
     }
 
     public function auto_login($user) {
@@ -286,16 +286,16 @@ class UserModel extends Model {
             setcookie($this->cookie_name, "", time() - 3600, '/', '.' . DOMAIN);
         }
 
-        $this->set_login($user, false);
-        return true;
+        $this->set_login($user, FALSE);
+        return TRUE;
     }
 
     public function getPublishersByAffiliate($affID, $field = [], $order = ['id' => 'DESC']) {
         $query = [
-            'aff_id' => $affID,
-            'status' => 1,
-            'permission' => ['$in' => [1,6,7]],
-            'deleted_at' => null,
+            'aff_id'     => $affID,
+            'status'     => 1,
+            'permission' => ['$in' => [1, 6, 7]],
+            'deleted_at' => NULL,
 
         ];
         $Users = $this->find($query, $field, $order);
@@ -310,15 +310,15 @@ class UserModel extends Model {
     }
 
     public function validate_billing($inputs) {
-        if (empty($inputs['payment_method'])) {
+        if (empty($inputs['method'])) {
             return 'Payment Method is a required field';
         }
-        return true;
+        return TRUE;
     }
 
     public function update_billing($inputs) {
 
-        $payment_method = isset($inputs['payment_method']) ? trim(strip_tags($inputs['payment_method'])) : '';
+        $payment_method = isset($inputs['method']) ? trim(strip_tags($inputs['method'])) : '';
         $payment_email = isset($inputs['payment_email']) ? trim(strip_tags($inputs['payment_email'])) : '';
         $crypto_currency = isset($inputs['crypto_currency']) ? trim(strip_tags($inputs['crypto_currency'])) : '';
         $wallet_id = isset($inputs['wallet_id']) ? trim(strip_tags($inputs['wallet_id'])) : NULL;
@@ -371,27 +371,28 @@ class UserModel extends Model {
         $user = $this->get_user_login();
 
         $data = [
-            'payment_method' => $payment_method,
-            'payment_email' => $payment_email,
-            'crypto_currency' => $crypto_currency,
-            'wallet_id' => $wallet_id,
-            'user_id' => $user->id,
-            'beneficiary_name' => $beneficiary_name,
-            'bank_name' => $bank_name,
-            'bank_address' => $bank_address,
+            'method'              => $payment_method,
+            'paypal_email'        => !empty($payment_method) && $payment_method == "paypal" ? $payment_email : "",
+            'payoneer_email'      => !empty($payment_method) && $payment_method == "payoneer" ? $payment_email : "",
+            'cryptocurrency'      => $crypto_currency,
+            'wallet_id'           => $wallet_id,
+            'user_id'             => $user->id,
+            'beneficiary_name'    => $beneficiary_name,
+            'bank_name'           => $bank_name,
+            'bank_address'        => $bank_address,
             'bank_account_number' => $bank_account_number,
             'bank_routing_number' => $bank_routing_number,
-            'swift_code' => $swift_code,
-            'bank_iban_number' => $bank_iban_number,
+            'swift_code'          => $swift_code,
+            'bank_iban_number'    => $bank_iban_number,
         ];
 
         $billing_user = $this->getBillingByUser();
         if ($billing_user) {
-            $data['last_change'] = time();
+            $data['updated_at'] = date("Y-m-d H:i:s", time());
             $this->setTable(TABLE_BILLING_USER)->update(['id' => $billing_user->id], $data);
             $messages['success'] = 'Update success!';
         } else {
-            $data['create_time'] = time();
+            $data['created_at'] = date("Y-m-d H:i:s", time());
             $this->setTable(TABLE_BILLING_USER)->insert($data);
             $messages['success'] = 'Update success!';
         }
@@ -424,10 +425,10 @@ class UserModel extends Model {
 
         $captcha_token = trim($inputs['captcha_token']);
         $data = [
-            'secret' => "6Lec_q4UAAAAAJwbYaRLwz2tTfAbHRiRFOobgDt6",
+            'secret'   => "6Lec_q4UAAAAAJwbYaRLwz2tTfAbHRiRFOobgDt6",
             'response' => $captcha_token
         ];
-        $result_captcha = json_decode(_curlPost("https://www.google.com/recaptcha/api/siteverify", $data), true);
+        $result_captcha = json_decode(_curlPost("https://www.google.com/recaptcha/api/siteverify", $data), TRUE);
         if (!$result_captcha['success'] || $result_captcha['score'] < 0.5) {
 
             return ['error' => 'Google\'s captcha evaluates your visitor as a bot'];
@@ -443,14 +444,14 @@ class UserModel extends Model {
                     return ['error' => 'Email already exists'];
                 } else {
                     $insert = [
-                        'password' => $password,
-                        'email' => $email,
-                        'permission' => 8,
-                        'status' => 1,
-                        'first_name' => $first_name,
-                        'last_name' => $last_name,
-                        'net' => 45,
-                        'aff_level' => 1,
+                        'password'    => $password,
+                        'email'       => $email,
+                        'permission'  => 8,
+                        'status'      => 1,
+                        'first_name'  => $first_name,
+                        'last_name'   => $last_name,
+                        'net'         => 45,
+                        'aff_level'   => 1,
                         'create_time' => time()
                     ];
                     $user = $this->insert($insert);
@@ -459,8 +460,8 @@ class UserModel extends Model {
                     }
 
                     $data = [
-                        'admin_id' => $user,
-                        'email' => $email,
+                        'admin_id'  => $user,
+                        'email'     => $email,
                         'create_at' => time()
                     ];
                     $_SESSION['_admin'] = $data;

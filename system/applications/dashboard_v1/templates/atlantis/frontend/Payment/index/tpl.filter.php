@@ -11,8 +11,8 @@
                 <div class="form-group col-md-4 col-xl-2">
                     <select class="select2 form-control" name="f_status" data-placeholder="Select By Status" onchange="this.form.submit();" data-allow-clear="true" data-minimum-results-for-search="-1">
                         <option value=""></option>
-                        <option value="paid" <?= isset($filters['status']) && $filters['status'] == 'paid' ? 'selected' : '' ?>>Paid</option>
-                        <option value="pending" <?= isset($filters['status']) && $filters['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
+                        <option value="2" <?= isset($filters['status']) && $filters['status'] == '2' ? 'selected' : '' ?>>Paid</option>
+                        <option value="1" <?= isset($filters['status']) && $filters['status'] == '1' ? 'selected' : '' ?>>Pending</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4 col-xl-2">

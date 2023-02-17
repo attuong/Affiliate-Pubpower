@@ -75,7 +75,7 @@ class UserController extends Controller {
 
                 $update = $this->UserModel->update_billing($inputs, $user->id);
                 if (!isset($update['error'])) {
-                    $this->assign['success_message'] = true; //'Update billing success!';
+                    $this->assign['success_message'] = TRUE; //'Update billing success!';
                 } else {
                     $this->assign['error_message'] = $update['error'];
                 }

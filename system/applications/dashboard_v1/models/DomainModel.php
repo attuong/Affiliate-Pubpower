@@ -23,8 +23,12 @@ class DomainModel extends Model {
         if (!$user) {
             return [];
         }
-
-        $query = ['aff_id' => $user->id];
+        $publishers = UserModel::getInstance()->getPublishersByAffiliate($user->id);
+        if (!$publishers) {
+            return [];
+        }
+        $PubIds = get_array_by_key_of_array($publishers, "id", "object");
+        $query = ['user_id' => ['$in' => $PubIds]];
         if (!empty($filters['domain_id'])) {
             $query['domain_id'] = $filters['domain_id'];
         }
@@ -44,7 +48,7 @@ class DomainModel extends Model {
         $query = [
             'user_id' => ['$in' => $PubIDs],
         ];
-        $domains = $this->find($query, ["id","name"]);
+        $domains = $this->find($query, ["id", "name"]);
         return $domains;
     }
 

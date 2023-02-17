@@ -65,7 +65,7 @@
                         <div class="row">
                             <div class="col-md-12 col-lg-12">
 
-                                <form method="POST" action="">
+                                <form method="POST" action="" autocomplete="off">
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <label for="Email" title="Required field">Email <sup class="text-danger">*</sup></label>
@@ -76,7 +76,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="Password" title="Required field">Password <sup class="text-danger">*</sup></label>
-                                            <input type="password" name="password" class="form-control" id="Password" placeholder="Password">
+                                            <input type="password" name="password" class="form-control" id="Password" placeholder="Password" autocomplete="off">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="RetypePassword" title="Required field">Retype Password <sup class="text-danger">*</sup></label>
@@ -102,12 +102,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row">
+<!--                                    <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <label for="Note">Note</label>
                                             <textarea class="form-control" name="note" rows="3" id="Note" ><?= isset($inputs['note']) ? $inputs['note'] : $user->note; ?></textarea>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                     <div class="form-row">
                                         <div class="form-group col-md-12">

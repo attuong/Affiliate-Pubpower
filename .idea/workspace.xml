@@ -2,102 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7930b907-2eec-42de-84a5-3ae4943ffa2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/affiliate-program.pubpower.io.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sshConfigs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public_html/themes/atlantis/assets/js/aisearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/public_html/themes/atlantis/assets/js/aisearch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/AdtagBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/AlertBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/BidderBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/EmailBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/FrontendBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/ReportBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/UserBlock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Admin/tpl.alert.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Admin/tpl.pagination.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Admin/tpl.sidebar.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Adtag/tpl.copy-adtag.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Adtag/tpl.down-adtag-html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Adtag/tpl.down-adtag-txt.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Bidder/tpl.bidder-for-domain.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Bidder/tpl.bidder-item.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Email/tpl.confirm_newsletters_subscribe.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Email/tpl.confirm_survey_completed.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Frontend/tpl.confirm_newsletters_subscribe.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Frontend/tpl.footer_new_products.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Frontend/tpl.product_item.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Message/tpl.show_message.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Message/tpl.show_message_with_modal.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/Report/tpl.export-report.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/blocks/views/User/tpl.modal_billing_wire_transfer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/bootstrap.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/functions.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/###demo.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/ActivityModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/DomainModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/HomeModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/PaymentModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/ReportModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/UploadModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/UserModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/models/WidgetModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/ajax/ReportController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/frontend/DomainController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/frontend/HomeController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/frontend/LinkController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/frontend/PaymentController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/frontend/ReportController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/modules/frontend/UserController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_render/tpl.default_passback.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_render/tpl.display_bids.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_render/tpl.display_js.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_render/tpl.instream_js.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_render/tpl.outstream_js.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_render/tpl.smart_banner_js.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/_routers/theme.atlantis.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Bidder_unchanged/tpl.load_bidder_unchanged_for_size.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Bidder_unchanged/tpl.load_bidder_unchanged_item_domain_for_size.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Bidder_unchanged/tpl.load_bidder_unchanged_item_for_domain.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Report/tpl.filter_publisher_by_month.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Report/tpl.filter_website_by_report.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Report/tpl.load_config_filter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/ajax/Report/tpl.load_modal_config_filter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Domain/tpl.index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Home/tpl.login.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Home/tpl.register.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Link/tpl.index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Payment/index/tpl.filter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Payment/tpl.index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Report/index/tpl.filter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/Report/tpl.index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/User/index/tpl.filter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/User/tpl.billing.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/frontend/User/tpl.setting.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.404.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.__custom_template.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.__footer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.__header.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.__sidebar_left.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.layout.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/atlantis/tpl.layout_empty.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_dev/templates/tpl.404.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/models/DomainModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/models/DomainModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/models/ReportModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/models/ReportModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/models/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/models/UserModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/ajax/ReportController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/ajax/Report/tpl.filter_website_by_report.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Report/tpl.filter_website_by_report.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Report/index/tpl.filter.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Report/index/tpl.filter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Report/tpl.index.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Report/tpl.index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/modules/frontend/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Link/tpl.index.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Link/tpl.index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Payment/index/tpl.filter.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Payment/index/tpl.filter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Payment/tpl.index.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/Payment/tpl.index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/User/tpl.billing.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/User/tpl.billing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/User/tpl.setting.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/frontend/User/tpl.setting.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/tpl.__header.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/applications/dashboard_v1/templates/atlantis/tpl.__header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/configs.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/configs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/libraries/ezSQL3/shared/class.querypattern.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/libraries/ezSQL3/shared/class.querypattern.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/libraries/ezSQL3/shared/ez_sql_core.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/libraries/ezSQL3/shared/ez_sql_core.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,15 +35,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "yarn",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\PHP\Affiliate-Pubpower\system\applications\dashboard_v1\templates\atlantis\frontend\Report" />
@@ -142,6 +58,9 @@
       <option name="presentableId" value="Default" />
       <updated>1675303979874</updated>
       <workItem from="1675303981452" duration="10791000" />
+      <workItem from="1676435904387" duration="1198000" />
+      <workItem from="1676518808099" duration="112000" />
+      <workItem from="1676602113493" duration="8000000" />
     </task>
     <servers />
   </component>

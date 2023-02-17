@@ -27,18 +27,33 @@
                 </div>
                 <div class="card-body">
                     <div class="col-md-8 pb-5" style="margin: 0 auto">
+                        <?php if (!empty($is_system) && $is_system == "Pubpower"): ?>
                         <div class="form-row pb-4">
                             <div class="form-group col-md-12">
-                                <label title="Valueimpression.com">Home (valueimpression.com)</label>
-                                <input type="text" readonly="" value="<?= 'https://' . DOMAIN_MASTER . '?aff=' . $user->id ?>" class="form-control select-input">
+                                <label title="Valueimpression.com">Home (pubpower.io)</label>
+                                <input type="text" readonly="" value="<?= 'https://pubpower.io?aff=' . $user->id ?>" class="form-control select-input">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label title="Sign Up Valueimpression">Sign Up (dashboard.valueimpression.com)</label>
-                                <input type="text" readonly="" value="<?= 'https://' . URL_DASHBOARD_REGISTER . '?aff=' . $user->id ?>" class="form-control select-input">
+                                <label title="Sign Up Valueimpression">Sign Up (apps.pubpower.io)</label>
+                                <input type="text" readonly="" value="<?= 'https://' . URL_REGISTER . '?aff=' . $user->id ?>" class="form-control select-input">
                             </div>
                         </div>
+                        <?php else: ?>
+                            <div class="form-row pb-4">
+                                <div class="form-group col-md-12">
+                                    <label title="Valueimpression.com">Home (valueimpression.com)</label>
+                                    <input type="text" readonly="" value="<?= 'https://' . DOMAIN_MASTER . '?aff=' . $user->id ?>" class="form-control select-input">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label title="Sign Up Valueimpression">Sign Up (dashboard.valueimpression.com)</label>
+                                    <input type="text" readonly="" value="<?= 'https://' . URL_REGISTER . '?aff=' . $user->id ?>" class="form-control select-input">
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

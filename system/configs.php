@@ -17,6 +17,8 @@ $configs['default']['act'] = isset($set_default_act) && $set_default_act ? $set_
 $configs['theme_folder'] = 'atlantis';
 
 $configs['is_local'] = $is_local = (DOMAIN === 'aff.valueimpression.local') ? true : false;
+$configs['is_system'] = $is_system = (DOMAIN === 'affiliate-program.pubpower.io') ? "Pubpower" : "VLI";
+
 if ($is_local) {
     $_theme_setting_dev = (object) [
                 'logo' => 'purple2',
@@ -138,7 +140,7 @@ define('DOMAIN_MASTER', 'apps.pubpower.io');
 // define('URL_CONSOLE_AUTOLOGIN', '//console.valueimpression.com/home/atl');
 // define('URL_VLI', '//valueimpression.com');
 define('URL_STATIC', '//assets.bilsyndication.com');
-// define('URL_DASHBOARD_REGISTER', 'dashboard.valueimpression.com/Register');
+define('URL_REGISTER', 'apps.pubpower.io/register');
 define('URL_DASHBOARD', ROOTDOMAIN);
 // define('URL_ADS', '//' . DOMAIN_AD);
 // define('URL_ADSENSE', '/adsense/index?f_step%5B%5D=5&f_step%5B%5D=4&f_step%5B%5D=3&f_step%5B%5D=2&f_step%5B%5D=1');
