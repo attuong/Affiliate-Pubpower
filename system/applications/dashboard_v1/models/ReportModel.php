@@ -95,7 +95,7 @@ class ReportModel extends Model {
             // $start_date = date("Y-m-d", strtotime($inputs['start_day']));
             // $end_date = date("Y-m-d", strtotime($inputs['end_day']));
             $sql = [
-                "query"   => "SELECT SUM(netRevenue) as netRevenue FROM \"pw_tag\" WHERE FLOOR(__time TO DAY) like '" . $month . "%'  AND pubId IN (" . implode($PubIDs, ",") . ")",
+                "query"   => "SELECT SUM(netRevenue) as netRevenue FROM \"pw_bidder\" WHERE FLOOR(__time TO DAY) like '" . $month . "%'  AND owner = 'apac' AND pubId IN (" . implode($PubIDs, ",") . ")",
                 "context" => ["sqlTimeZone" => "America/New_York"]
             ];
             $reprot = $this->findOneDruid($sql);
@@ -150,7 +150,7 @@ class ReportModel extends Model {
 
     public function get_revenue_for_domain_by_month($domain_id, $month) {
         $sql = [
-            "query"   => "SELECT SUM(netRevenue) as netRevenue FROM \"pw_tag\" WHERE FLOOR(__time TO DAY) like '" . $month . "%'  AND inventoryId IN (" . $domain_id . ")",
+            "query"   => "SELECT SUM(netRevenue) as netRevenue FROM \"pw_bidder\" WHERE FLOOR(__time TO DAY) like '" . $month . "%'  AND owner = 'apac' AND inventoryId IN (" . $domain_id . ")",
             "context" => ["sqlTimeZone" => "America/New_York"]
         ];
         $report = $this->findOneDruid($sql);
